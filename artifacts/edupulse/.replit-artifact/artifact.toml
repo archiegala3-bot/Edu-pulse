@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "EduPulse"
+description = "A role-based academic intelligence platform for Maharashtra HSC Class 12 students, teachers, parents, and principals with actionable progress insights and guided learning."
+version = "1.0.0"
+id = "artifacts/edupulse"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19494
+
+[services.development]
+run = "pnpm --filter @workspace/edupulse run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/edupulse", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/edupulse/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19494"
+BASE_PATH = "/"
